@@ -423,7 +423,13 @@
 -analyzer:"D:/Users/6000.0.44f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"D:/Users/6000.0.44f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"D:/Users/6000.0.44f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
-"Assets/TutorialInfo/Scripts/Readme.cs"
+"Assets/Scripts/cameracontroller.cs"
+"Assets/Scripts/enemyscript.cs"
+"Assets/Scripts/GameManager.cs"
+"Assets/Scripts/onclick.cs"
+"Assets/Scripts/playercontroller.cs"
+"Assets/Scripts/powespawner.cs"
+"Assets/Scripts/rotator.cs"
 -langversion:9.0
 /deterministic
 /optimize+
