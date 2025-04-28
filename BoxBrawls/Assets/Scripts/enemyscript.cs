@@ -8,9 +8,10 @@ using TMPro;
 public class enemyscript : MonoBehaviour
 {
     private Rigidbody rb;
-    public float health = 200f; // Set default health here
-    private int damage = 20;    // Set default damage here
-    private int count = 1;      // Set default power count
+    public float health = 200f; 
+    private int damage = 20;    
+    private int count = 1;      
+    public float speedup;
 
     public playercontroller playercount;
     public NavMeshAgent enemy;
@@ -25,14 +26,14 @@ public class enemyscript : MonoBehaviour
     [SerializeField] private Image healthbar;
     
     private List<GameObject> powerups = new List<GameObject>();
-    private float maxHealth; // Add maxHealth to fix bar
+    private float maxHealth; 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Rigidbody = ridgebox.GetComponent<Rigidbody>();
 
-        maxHealth = health; // Set maxHealth based on starting health
+        maxHealth = health; 
 
         enemy.speed = enemySpeed;
         setenemyhealth();
@@ -74,7 +75,7 @@ public class enemyscript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("pickup"))
+        if (other.gameObject.CompareTag("Strength PU"))
         {
             other.gameObject.SetActive(false);
             transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
@@ -84,10 +85,25 @@ public class enemyscript : MonoBehaviour
             Rigidbody.mass += 1;
             Rigidbody.linearDamping += 1;
             Rigidbody.angularDamping += 1;
-            maxHealth += 15; // IMPORTANT: Update maxHealth if you increase health
+            maxHealth += 15;
             setenemyhealth();
             updatehealthbar();
             setenemypower();
+        }
+        else if(other.gameObject.CompareTag("Health PU"))
+        {
+            other.gameObject.SetActive(false);
+            health += 50;
+            maxHealth += 50;
+            setenemyhealth();
+            updatehealthbar();
+        }
+        else if(other.gameObject.CompareTag("Speed PU"))
+        {
+            
+            other.gameObject.SetActive(false); 
+            enemySpeed += speedup; 
+            enemy.speed = enemySpeed; 
         }
         else if (other.CompareTag("box"))
         {
@@ -121,13 +137,19 @@ public class enemyscript : MonoBehaviour
     void initializePowerups()
     {
         powerups.Clear();
-        GameObject[] powerupObjects = GameObject.FindGameObjectsWithTag("pickup");
-        powerups.AddRange(powerupObjects);
+
+        GameObject[] healthPUs = GameObject.FindGameObjectsWithTag("Health PU");
+        GameObject[] speedPUs = GameObject.FindGameObjectsWithTag("Speed PU");
+        GameObject[] strengthPUs = GameObject.FindGameObjectsWithTag("Strength PU");
+
+        powerups.AddRange(healthPUs);
+        powerups.AddRange(speedPUs);
+        powerups.AddRange(strengthPUs);
     }
 
     void setenemyhealth()
     {
-        enemyhealth.text = "Health: " + health.ToString("F0"); // Show as whole number
+        enemyhealth.text = "Health: " + health.ToString("F0"); 
     }
 
     void setenemypower()
@@ -137,6 +159,6 @@ public class enemyscript : MonoBehaviour
 
     private void updatehealthbar()
     {
-        healthbar.fillAmount = health / maxHealth; // FIX: use maxHealth to normalize
+        healthbar.fillAmount = health / maxHealth; 
     }
 }
