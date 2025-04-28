@@ -7,6 +7,8 @@ using TMPro;
 
 public class enemyscript : MonoBehaviour
 {
+    // this script handles enemy behavior, including movement, health management, and powerup interactions.
+    // Components and variables
     private Rigidbody rb;
     public float health = 200f; 
     private int damage = 20;    
@@ -30,6 +32,7 @@ public class enemyscript : MonoBehaviour
 
     void Start()
     {
+        // Initialize components and starting values
         rb = GetComponent<Rigidbody>();
         Rigidbody = ridgebox.GetComponent<Rigidbody>();
 
@@ -43,12 +46,15 @@ public class enemyscript : MonoBehaviour
 
     void Update()
     {
+         // Enemy behavior based on player stats
         if ((count <= playercount.count && health <= playercount.health))
         {
+             // Chase the player if weaker
             enemy.SetDestination(player.position);
         }
         else
         {
+            // Look for powerups if stronger
             initializePowerups();
             Transform closestPowerup = FindClosestPowerup();
             if (closestPowerup != null)
@@ -60,14 +66,14 @@ public class enemyscript : MonoBehaviour
                 enemy.SetDestination(player.position);
             }
         }
-
+        //  enemy death
         if (health <= 0)
         {
             health = 0;
             gameObject.SetActive(false);
             GameManager.Instance.EnemyDied();
         }
-
+        // Update UI every frame
         setenemyhealth();
         updatehealthbar();
         setenemypower();
@@ -75,6 +81,7 @@ public class enemyscript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+         // Handle different powerup pickups and collisions
         if (other.gameObject.CompareTag("Strength PU"))
         {
             other.gameObject.SetActive(false);
@@ -112,6 +119,7 @@ public class enemyscript : MonoBehaviour
     }
 
     Transform FindClosestPowerup()
+    // Find the closest active powerup
     {
         Transform closestPowerup = null;
         float closestDistance = float.MaxValue;
@@ -136,6 +144,7 @@ public class enemyscript : MonoBehaviour
 
     void initializePowerups()
     {
+        // Refresh list of all available powerups
         powerups.Clear();
 
         GameObject[] healthPUs = GameObject.FindGameObjectsWithTag("Health PU");

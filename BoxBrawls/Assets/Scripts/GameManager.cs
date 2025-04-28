@@ -4,8 +4,10 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance; // Singleton
-
+    //this script manages the game state, including player and enemy deaths, and displays the Game Over UI.
+    public static GameManager Instance; 
+  
+    // UI elements for the Game Over screen
     [Header("Game Over UI")]
     public TextMeshProUGUI gameOverText;
     public GameObject playAgainButton;
@@ -15,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        // Setup singleton
+        // Make sure the Game Over UI is hidden at the start
         if (Instance == null)
         {
             Instance = this;

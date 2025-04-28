@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class powespawner : MonoBehaviour
 {
+    // This script handles the spawning of powerups in the game.
+    // It randomly spawns powerups at specified intervals and ensures they are not spawned when the player or enemy is inactive.
     public GameObject[] myobject; 
     float timePassed = 0f; 
 
