@@ -38,12 +38,12 @@ public class playercontroller : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        count = 0;
-        health = maxhealth;
-        damage = 10;
-        originalSpeed = speed;
-        currentStamina = maxStamina;
+        rb = GetComponent<Rigidbody>(); //get Rigidbody
+        count = 0;//initialize powerup
+        health = maxhealth;//max out player health
+        damage = 10;//set damage
+        originalSpeed = speed;//set original movement speed
+        currentStamina = maxStamina;//max out stamina bar
 
         sethealthtext();
         setplayerpower();
