@@ -4,63 +4,34 @@ using UnityEngine;
 
 public class powespawner : MonoBehaviour
 {
-    public GameObject[] myobject; // An array of powerup objects to spawn
-    float timePassed = 0f; // Tracks the time elapsed
+    public GameObject[] myobject; 
+    float timePassed = 0f; 
 
-    public GameObject player; // Reference to the player GameObject
-    public GameObject enemy; // Reference to the enemy GameObject
+    public GameObject player; 
+    public GameObject enemy; 
 
-    private bool shouldSpawnPowerups = true; // Flag to control powerup spawning
-    public enum Powerup
-    {
-        STRENGTH,
-        SPEED
-    };
-    private Powerup[] powerups;
-
-    void Start()
-    {
-        powerups = (Powerup[])System.Enum.GetValues(typeof(Powerup));
-    }
+    private bool shouldSpawnPowerups = true; 
 
     void Update()
     {
         if (shouldSpawnPowerups)
         {
-            timePassed += Time.deltaTime; // Increment the timePassed based on real-time
+            timePassed += Time.deltaTime; 
 
-            // Check if enough time has passed to spawn a powerup
-            if (timePassed > 1.5f)
+            if (timePassed > 1.0f)
             {
-                Powerup randomPowerup = powerups[Random.Range(0, powerups.Length)];
+                int randomIndex = Random.Range(0, myobject.Length); 
+                Vector3 randomspawnposition = new Vector3(Random.Range(-9, 9), 1, Random.Range(-9, 9)); // Random spawn location
 
-                // Generate a random index to select a powerup from the array
-                int randomIndex = Random.Range(0, myobject.Length);
+                Instantiate(myobject[randomIndex], randomspawnposition, Quaternion.identity); // Spawn it
 
-                // Generate a random spawn position within a specified range
-                Vector3 randomspawnposition = new Vector3(Random.Range(-9, 9), 1, Random.Range(-9, 9));
-
-                // Instantiate a random powerup at the generated spawn position with no rotation
-                GameObject spawnedObject = Instantiate(myobject[randomIndex], randomspawnposition, Quaternion.identity);
-
-                switch(randomPowerup)
-                {
-                    case Powerup.SPEED:
-                        spawnedObject.tag = "SpeedPU";
-                        break;
-                    case Powerup.STRENGTH:
-                        spawnedObject.tag = "StrengthPU";
-                        break;
-                }
-
-                timePassed = 0f; // Reset the timer
+                timePassed = 0f; 
             }
         }
 
-        // Check if either player or enemy is not active
+        
         if (!player.activeSelf || !enemy.activeSelf)
         {
-            // Stop spawning powerups if either the player or enemy is not active
             shouldSpawnPowerups = false;
         }
     }

@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 5013420608277249878}
   - component: {fileID: 1797835753640139115}
   m_Layer: 0
-  m_Name: basic pickup
-  m_TagString: pickup
+  m_Name: Strength Pickup
+  m_TagString: Strength PU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b30962036c256bc44b2feb7432067e24, type: 2}
+  - {fileID: 2100000, guid: 85a086972c792d0478b341e6a33dab3a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

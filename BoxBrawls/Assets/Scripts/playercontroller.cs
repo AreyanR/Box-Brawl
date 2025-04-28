@@ -99,24 +99,32 @@ public class playercontroller : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("SpeedPU"))
+        if (other.gameObject.CompareTag("Speed PU"))
         {
             other.gameObject.SetActive(false);
-            count += 1;
             speed += speedup;
             setplayerpower();
             updatehealthbar();
         }
-        else if (other.gameObject.CompareTag("StrengthPU"))
+        else if (other.gameObject.CompareTag("Strength PU"))
         {
             other.gameObject.SetActive(false);
             count += 1;
             transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
             health += 15;
+            maxhealth += 15;
             damage += 5;
             rb.mass += 1;
             rb.linearDamping += 1;
             rb.angularDamping += 1;
+            setplayerpower();
+            updatehealthbar();
+        }
+        else if (other.gameObject.CompareTag("Health PU"))
+        {
+            other.gameObject.SetActive(false);
+            health += 50;
+            maxhealth += 50;
             setplayerpower();
             updatehealthbar();
         }

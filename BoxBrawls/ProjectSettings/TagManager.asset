@@ -7,8 +7,9 @@ TagManager:
   - front
   - box
   - enemy
-  - pickup
-  - nuke pickup
+  - Health PU
+  - Speed PU
+  - Strength PU
   layers:
   - Default
   - TransparentFX
