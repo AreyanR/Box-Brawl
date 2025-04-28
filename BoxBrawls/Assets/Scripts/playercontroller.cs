@@ -6,6 +6,9 @@ using TMPro;
 
 public class playercontroller : MonoBehaviour
 {
+    // This script handles the player's movement, health, power-ups, and dash mechanics.
+
+      //  Player refs and stats 
     private Rigidbody rb;
     public int count;
     public float speed;
@@ -50,6 +53,7 @@ public class playercontroller : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Handle player movement based on input
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
@@ -67,7 +71,7 @@ public class playercontroller : MonoBehaviour
     }
 
     void Update()
-    {
+    {  // Handle player death
         if (health <= 0)
         {
             health = 0;
@@ -98,7 +102,7 @@ public class playercontroller : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
+    {  // Handle powerup pickups and enemy collisions
         if (other.gameObject.CompareTag("Speed PU"))
         {
             other.gameObject.SetActive(false);

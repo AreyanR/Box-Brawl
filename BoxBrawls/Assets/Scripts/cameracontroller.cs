@@ -13,7 +13,7 @@ public class cameracontroller : MonoBehaviour
         offset = transform.position - player.transform.position;
     }
 
-    // Update the camera's position to follow the player with the specified offset.
+    // Update the camera's position to follow the player 
     void LateUpdate()
     {
         transform.position = player.transform.position + offset;
