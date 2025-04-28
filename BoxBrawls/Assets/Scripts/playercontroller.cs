@@ -9,6 +9,7 @@ public class playercontroller : MonoBehaviour
     private Rigidbody rb;
     public int count;
     public float speed;
+    public float speedup;
     public float health;
     private int damage;
 
@@ -98,7 +99,15 @@ public class playercontroller : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("pickup"))
+        if (other.gameObject.CompareTag("SpeedPU"))
+        {
+            other.gameObject.SetActive(false);
+            count += 1;
+            speed += speedup;
+            setplayerpower();
+            updatehealthbar();
+        }
+        else if (other.gameObject.CompareTag("StrengthPU"))
         {
             other.gameObject.SetActive(false);
             count += 1;

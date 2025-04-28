@@ -11,6 +11,17 @@ public class powespawner : MonoBehaviour
     public GameObject enemy; // Reference to the enemy GameObject
 
     private bool shouldSpawnPowerups = true; // Flag to control powerup spawning
+    public enum Powerup
+    {
+        STRENGTH,
+        SPEED
+    };
+    private Powerup[] powerups;
+
+    void Start()
+    {
+        powerups = (Powerup[])System.Enum.GetValues(typeof(Powerup));
+    }
 
     void Update()
     {
@@ -21,6 +32,8 @@ public class powespawner : MonoBehaviour
             // Check if enough time has passed to spawn a powerup
             if (timePassed > 1.5f)
             {
+                Powerup randomPowerup = powerups[Random.Range(0, powerups.Length)];
+
                 // Generate a random index to select a powerup from the array
                 int randomIndex = Random.Range(0, myobject.Length);
 
@@ -28,7 +41,17 @@ public class powespawner : MonoBehaviour
                 Vector3 randomspawnposition = new Vector3(Random.Range(-9, 9), 1, Random.Range(-9, 9));
 
                 // Instantiate a random powerup at the generated spawn position with no rotation
-                Instantiate(myobject[randomIndex], randomspawnposition, Quaternion.identity);
+                GameObject spawnedObject = Instantiate(myobject[randomIndex], randomspawnposition, Quaternion.identity);
+
+                switch(randomPowerup)
+                {
+                    case Powerup.SPEED:
+                        spawnedObject.tag = "SpeedPU";
+                        break;
+                    case Powerup.STRENGTH:
+                        spawnedObject.tag = "StrengthPU";
+                        break;
+                }
 
                 timePassed = 0f; // Reset the timer
             }
