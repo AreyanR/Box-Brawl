@@ -28,7 +28,7 @@ public class enemyscript : MonoBehaviour
     [SerializeField] private Image healthbar;
     
     private List<GameObject> powerups = new List<GameObject>();
-    private float maxHealth; 
+    public float maxhealth; 
 
     void Start()
     {
@@ -36,7 +36,7 @@ public class enemyscript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Rigidbody = ridgebox.GetComponent<Rigidbody>();
 
-        maxHealth = health; 
+        maxhealth = health; 
 
         enemy.speed = enemySpeed;
         setenemyhealth();
@@ -92,7 +92,7 @@ public class enemyscript : MonoBehaviour
             Rigidbody.mass += 1;
             Rigidbody.linearDamping += 1;
             Rigidbody.angularDamping += 1;
-            maxHealth += 15;
+            maxhealth += 15;
             setenemyhealth();
             updatehealthbar();
             setenemypower();
@@ -101,7 +101,7 @@ public class enemyscript : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             health += 50;
-            maxHealth += 50;
+            maxhealth += 50;
             setenemyhealth();
             updatehealthbar();
         }
@@ -168,6 +168,6 @@ public class enemyscript : MonoBehaviour
 
     private void updatehealthbar()
     {
-        healthbar.fillAmount = health / maxHealth; 
+        healthbar.fillAmount = health / maxhealth; 
     }
 }
