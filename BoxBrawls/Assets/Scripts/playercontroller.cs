@@ -24,7 +24,7 @@ public class playercontroller : MonoBehaviour
     [SerializeField] private Image healthbar;
     [SerializeField] private Image stamwheel;
 
-    private float maxhealth = 200f;
+    public float maxhealth = 200f;
 
     // Dodge / Dash variables
     private bool isDashing = false;
