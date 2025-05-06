@@ -19,7 +19,7 @@ public class onclick : MonoBehaviour
 
     public void mainmenu()
     {
-        //SceneManager.LoadScene("Main Menu"); for future development
+        SceneManager.LoadScene("MainMenu");
     }
 
 }
