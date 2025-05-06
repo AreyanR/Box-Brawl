@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Imports/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scene/MainMenu.unity
+    guid: 10cd1ad15cc16234ea4949c17db5fc59
+  - enabled: 1
     path: Assets/Scene/Fight.unity
     guid: d8cfbb68f834c4a11bb330c536fef442
   m_configObjects:

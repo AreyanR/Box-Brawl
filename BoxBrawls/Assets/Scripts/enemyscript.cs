@@ -115,6 +115,13 @@ public class enemyscript : MonoBehaviour
         else if (other.CompareTag("box"))
         {
             playercount.health -= damage;
+            Vector3 knockbackDirection = (transform.position - other.transform.position).normalized;
+           float knockbackForce = 3f;
+            float scaleFactor = transform.localScale.magnitude; // Approximate size multiplier
+            float adjustedForce = knockbackForce * scaleFactor;
+
+            Rigidbody.AddForce(knockbackDirection * adjustedForce, ForceMode.Impulse);
+
         }
     }
 
