@@ -113,7 +113,7 @@ public class playercontroller : MonoBehaviour
             speed += speedup;
             setplayerpower();
             updatehealthbar();
-            // rrr add powerup sound
+            audioSource.PlayOneShot(pickupSound);
         }
         else if (other.gameObject.CompareTag("Strength PU"))
         {
@@ -128,7 +128,7 @@ public class playercontroller : MonoBehaviour
             rb.angularDamping += 1;
             setplayerpower();
             updatehealthbar();
-            // rrr add powerup sound
+            audioSource.PlayOneShot(pickupSound);
         }
         else if (other.gameObject.CompareTag("Health PU"))
         {
@@ -137,11 +137,11 @@ public class playercontroller : MonoBehaviour
             maxhealth += 50;
             setplayerpower();
             updatehealthbar();
-            // rrr add powerup sound
+            audioSource.PlayOneShot(pickupSound);
         }
         else if (other.CompareTag("enemy"))
         {
-            // rrr add hit sound
+            audioSource.PlayOneShot(hitSound);
             enemy.health -= damage;
         }
     }
@@ -153,7 +153,7 @@ public class playercontroller : MonoBehaviour
             isDashing = true;
             currentStamina -= dashStaminaCost;
             audioSource.PlayOneShot(dodgeSound);
-            // rrr add dash sound
+            audioSource.PlayOneShot(dodgeSound);
 
             speed *= 2f; // Double the speed during dash
 
