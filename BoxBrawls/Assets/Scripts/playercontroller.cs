@@ -23,6 +23,10 @@ public class playercontroller : MonoBehaviour
 
     [SerializeField] private Image healthbar;
     [SerializeField] private Image stamwheel;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip pickupSound;
+    [SerializeField] private AudioClip dodgeSound;
+    [SerializeField] private AudioClip hitSound;
 
     public float maxhealth = 200f;
 
@@ -109,6 +113,7 @@ public class playercontroller : MonoBehaviour
             speed += speedup;
             setplayerpower();
             updatehealthbar();
+            // rrr add powerup sound
         }
         else if (other.gameObject.CompareTag("Strength PU"))
         {
@@ -123,6 +128,7 @@ public class playercontroller : MonoBehaviour
             rb.angularDamping += 1;
             setplayerpower();
             updatehealthbar();
+            // rrr add powerup sound
         }
         else if (other.gameObject.CompareTag("Health PU"))
         {
@@ -131,9 +137,11 @@ public class playercontroller : MonoBehaviour
             maxhealth += 50;
             setplayerpower();
             updatehealthbar();
+            // rrr add powerup sound
         }
         else if (other.CompareTag("enemy"))
         {
+            // rrr add hit sound
             enemy.health -= damage;
         }
     }
@@ -144,7 +152,8 @@ public class playercontroller : MonoBehaviour
         {
             isDashing = true;
             currentStamina -= dashStaminaCost;
-            updatestamwheel();
+            audioSource.PlayOneShot(dodgeSound);
+            // rrr add dash sound
 
             speed *= 2f; // Double the speed during dash
 
