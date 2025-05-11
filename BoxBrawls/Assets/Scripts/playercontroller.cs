@@ -153,7 +153,6 @@ public class playercontroller : MonoBehaviour
             isDashing = true;
             currentStamina -= dashStaminaCost;
             audioSource.PlayOneShot(dodgeSound);
-            audioSource.PlayOneShot(dodgeSound);
 
             speed *= 2f; // Double the speed during dash
 
