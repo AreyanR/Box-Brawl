@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class StadiumPulseController : MonoBehaviour
 {
+    // This script controls the color and intensity of a UI element based on the health of two players.
     public playercontroller playerScript;
     public enemyscript opponentScript;
 

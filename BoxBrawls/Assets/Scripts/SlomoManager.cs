@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SlowmoManager : MonoBehaviour
 {
+    // this script manages the slow-motion effect in the game.
     public static SlowmoManager Instance;
 
     private Coroutine activeSlowmo;
