@@ -144,6 +144,13 @@ public class playercontroller : MonoBehaviour
             audioSource.PlayOneShot(hitSound);
             enemy.health -= damage;
         }
+        else if (other.CompareTag("Slowmo PU"))
+        {
+            other.gameObject.SetActive(false);
+            SlowmoManager.Instance.TriggerSlowmo();
+            audioSource.PlayOneShot(pickupSound);
+        }
+
     }
 
     private IEnumerator Dash()
@@ -199,4 +206,6 @@ public class playercontroller : MonoBehaviour
         float normalizedStamina = currentStamina / maxStamina;
         stamwheel.fillAmount = normalizedStamina;
     }
+
+
 }

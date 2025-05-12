@@ -2122,6 +2122,7 @@ MonoBehaviour:
   - {fileID: 730513150771725321, guid: 6caf52362568e4c269b26c7611705cb9, type: 3}
   - {fileID: 730513150771725321, guid: a4b50d5a2c383e04885680fe51ff3858, type: 3}
   - {fileID: 730513150771725321, guid: 7f09f3eaa8be8c845ac6a7f563a346fa, type: 3}
+  - {fileID: 730513150771725321, guid: 42f0fcf9cf8818c4ea689d2fc755988a, type: 3}
   player: {fileID: 3396611809402520336}
   enemy: {fileID: 5759664296212897023}
 --- !u!4 &912121964
@@ -2453,6 +2454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1009680547}
   - component: {fileID: 1009680546}
+  - component: {fileID: 1009680548}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2490,6 +2492,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1009680548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009680545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e02162b10275684780738ca044a343f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1069800090
 GameObject:
   m_ObjectHideFlags: 0
