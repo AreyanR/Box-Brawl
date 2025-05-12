@@ -123,6 +123,12 @@ public class enemyscript : MonoBehaviour
             Rigidbody.AddForce(knockbackDirection * adjustedForce, ForceMode.Impulse);
 
         }
+        else if (other.CompareTag("Slowmo PU"))
+        {
+            other.gameObject.SetActive(false);
+            SlowmoManager.Instance.TriggerSlowmo();
+        }
+
     }
 
     Transform FindClosestPowerup()
@@ -157,10 +163,13 @@ public class enemyscript : MonoBehaviour
         GameObject[] healthPUs = GameObject.FindGameObjectsWithTag("Health PU");
         GameObject[] speedPUs = GameObject.FindGameObjectsWithTag("Speed PU");
         GameObject[] strengthPUs = GameObject.FindGameObjectsWithTag("Strength PU");
+        GameObject[] slowmoPUs = GameObject.FindGameObjectsWithTag("Slowmo PU");
+
 
         powerups.AddRange(healthPUs);
         powerups.AddRange(speedPUs);
         powerups.AddRange(strengthPUs);
+        powerups.AddRange(slowmoPUs);
     }
 
     void setenemyhealth()
@@ -177,4 +186,7 @@ public class enemyscript : MonoBehaviour
     {
         healthbar.fillAmount = health / maxhealth; 
     }
+
+
+
 }
