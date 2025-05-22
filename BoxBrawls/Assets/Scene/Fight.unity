@@ -2123,6 +2123,7 @@ MonoBehaviour:
   - {fileID: 730513150771725321, guid: a4b50d5a2c383e04885680fe51ff3858, type: 3}
   - {fileID: 730513150771725321, guid: 7f09f3eaa8be8c845ac6a7f563a346fa, type: 3}
   - {fileID: 730513150771725321, guid: 42f0fcf9cf8818c4ea689d2fc755988a, type: 3}
+  - {fileID: 730513150771725321, guid: 6974c3bcae128814fab6bba97d8aa48e, type: 3}
   player: {fileID: 3396611809402520336}
   enemy: {fileID: 5759664296212897023}
 --- !u!4 &912121964
@@ -3926,7 +3927,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1936463476
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4339,6 +4340,10 @@ PrefabInstance:
       propertyPath: PlayerHealth
       value: 
       objectReference: {fileID: 368723328}
+    - target: {fileID: 7157199273578701463, guid: 6edc1bc9cbcc25848999f68177e89164, type: 3}
+      propertyPath: iceCubePrefab
+      value: 
+      objectReference: {fileID: 6470038387843083516, guid: 0f0d0e31b90dc4027baa3377e98b31db, type: 3}
     - target: {fileID: 8512887118937626793, guid: 6edc1bc9cbcc25848999f68177e89164, type: 3}
       propertyPath: m_Name
       value: player
@@ -4449,6 +4454,10 @@ PrefabInstance:
       propertyPath: playercount
       value: 
       objectReference: {fileID: 6622354370926945746}
+    - target: {fileID: 7507798604698002409, guid: b2a693adbe6050844bf3b608f964a7a3, type: 3}
+      propertyPath: iceCubePrefab
+      value: 
+      objectReference: {fileID: 6470038387843083516, guid: 0f0d0e31b90dc4027baa3377e98b31db, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
