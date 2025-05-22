@@ -11,6 +11,7 @@ TagManager:
   - Speed PU
   - Strength PU
   - Slowmo PU
+  - Freeze PU
   layers:
   - Default
   - TransparentFX

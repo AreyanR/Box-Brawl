@@ -8,7 +8,7 @@ public class playercontroller : MonoBehaviour
 {
     // This script handles the player's movement, health, power-ups, and dash mechanics.
 
-      //  Player refs and stats 
+    //  Player refs and stats 
     private Rigidbody rb;
     public int count;
     public float speed;
@@ -39,6 +39,11 @@ public class playercontroller : MonoBehaviour
     public float maxStamina = 10f;
     public float staminaRegenerationRate = 2f;
     public float dashStaminaCost = 10f;
+    public bool isFrozen = false;
+    private float freezeTimer = 0f;
+    public GameObject iceCubePrefab; // Assign in Inspector on the player
+    private GameObject iceCubeInstance;
+
 
     void Start()
     {
@@ -56,54 +61,84 @@ public class playercontroller : MonoBehaviour
     }
 
     void FixedUpdate()
+{
+    if (isFrozen)
     {
-        // Handle player movement based on input
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        Vector3 moveDirection = new Vector3(horizontal, 0, vertical).normalized;
-
-        Vector3 horizontalForce = moveDirection * speed;
-        horizontalForce.y = rb.linearVelocity.y;
-        rb.linearVelocity = horizontalForce;
-
-        if (moveDirection != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
+        // Optional: also zero velocity if you want total stop
+        rb.linearVelocity = Vector3.zero;
+        return; // skip all movement while frozen
     }
+
+    // ...rest of your movement code...
+    float horizontal = Input.GetAxis("Horizontal");
+    float vertical = Input.GetAxis("Vertical");
+
+    Vector3 moveDirection = new Vector3(horizontal, 0, vertical).normalized;
+
+    Vector3 horizontalForce = moveDirection * speed;
+    horizontalForce.y = rb.linearVelocity.y;
+    rb.linearVelocity = horizontalForce;
+
+    if (moveDirection != Vector3.zero)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+}
+
 
     void Update()
-    {  // Handle player death
-        if (health <= 0)
-        {
-            health = 0;
-            gameObject.SetActive(false);
-            GameManager.Instance.PlayerDied();
-        }
+{
+    // Handle freezing
+    if (isFrozen)
+    {
+        freezeTimer -= Time.deltaTime;
 
-        // Handle Dodge input
-        if (!isDashing)
+        // Optionally, you can prevent all input/movement here (just by returning)
+        if (freezeTimer <= 0f)
         {
-            if (Input.GetButtonDown("Jump") && CanDash())
+            isFrozen = false;
+
+            // Destroy ice cube
+            if (iceCubeInstance != null)
             {
-                StartCoroutine(Dash());
+                Destroy(iceCubeInstance);
+                iceCubeInstance = null;
             }
         }
-
-        // Regenerate stamina over time
-        if (currentStamina < maxStamina)
-        {
-            currentStamina += staminaRegenerationRate * Time.deltaTime * 3; // Faster regen like your original
-            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-            updatestamwheel();
-        }
-
-        sethealthtext();
-        setplayerpower();
-        updatehealthbar();
+        return; // Skip rest of Update while frozen
     }
+
+    // Handle player death
+    if (health <= 0)
+    {
+        health = 0;
+        gameObject.SetActive(false);
+        GameManager.Instance.PlayerDied();
+    }
+
+    // Handle Dodge input
+    if (!isDashing)
+    {
+        if (Input.GetButtonDown("Jump") && CanDash())
+        {
+            StartCoroutine(Dash());
+        }
+    }
+
+    // Regenerate stamina over time
+    if (currentStamina < maxStamina)
+    {
+        currentStamina += staminaRegenerationRate * Time.deltaTime * 3; // Faster regen
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        updatestamwheel();
+    }
+
+    sethealthtext();
+    setplayerpower();
+    updatehealthbar();
+}
+
 
     private void OnTriggerEnter(Collider other)
     {  // Handle powerup pickups and enemy collisions
@@ -148,6 +183,12 @@ public class playercontroller : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             SlowmoManager.Instance.TriggerSlowmo();
+            audioSource.PlayOneShot(pickupSound);
+        }
+        else if (other.CompareTag("Freeze PU"))
+        {
+            other.gameObject.SetActive(false);
+            enemy.Freeze(3f); // Call the freeze method on enemy
             audioSource.PlayOneShot(pickupSound);
         }
 
@@ -206,6 +247,19 @@ public class playercontroller : MonoBehaviour
         float normalizedStamina = currentStamina / maxStamina;
         stamwheel.fillAmount = normalizedStamina;
     }
+    
+    public void Freeze(float duration)
+{
+    isFrozen = true;
+    freezeTimer = duration;
+
+    // Spawn ice cube if not already there
+    if (iceCubePrefab != null && iceCubeInstance == null)
+    {
+        iceCubeInstance = Instantiate(iceCubePrefab, transform.position, Quaternion.identity, transform);
+    }
+}
+
 
 
 }
