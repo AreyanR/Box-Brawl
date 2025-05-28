@@ -12,6 +12,9 @@ TagManager:
   - Strength PU
   - Slowmo PU
   - Freeze PU
+  - Easy
+  - Medium
+  - Hard
   layers:
   - Default
   - TransparentFX

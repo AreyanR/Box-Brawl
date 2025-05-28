@@ -38,10 +38,11 @@ public class enemyscript : MonoBehaviour
 
     void Start()
     {
-        // Initialize components and starting values
         rb = GetComponent<Rigidbody>();
         Rigidbody = ridgebox.GetComponent<Rigidbody>();
 
+        // Set health from GameSettings
+        health = GameSettings.enemyHealth;
         maxhealth = health;
 
         enemy.speed = enemySpeed;
@@ -49,6 +50,7 @@ public class enemyscript : MonoBehaviour
         updatehealthbar();
         setenemypower();
     }
+
 
     void Update()
     {
