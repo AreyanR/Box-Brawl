@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d9dca9ae1786c394f9e79c637aa9a7bf, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2120,10 +2120,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myobject:
   - {fileID: 730513150771725321, guid: 6caf52362568e4c269b26c7611705cb9, type: 3}
-  - {fileID: 730513150771725321, guid: a4b50d5a2c383e04885680fe51ff3858, type: 3}
   - {fileID: 730513150771725321, guid: 7f09f3eaa8be8c845ac6a7f563a346fa, type: 3}
+  - {fileID: 730513150771725321, guid: a4b50d5a2c383e04885680fe51ff3858, type: 3}
   - {fileID: 730513150771725321, guid: 42f0fcf9cf8818c4ea689d2fc755988a, type: 3}
   - {fileID: 730513150771725321, guid: 6974c3bcae128814fab6bba97d8aa48e, type: 3}
+  - {fileID: 730513150771725321, guid: b2fa4051f50301244b9116f08ae3f4a5, type: 3}
   player: {fileID: 3396611809402520336}
   enemy: {fileID: 5759664296212897023}
 --- !u!4 &912121964

@@ -12,14 +12,24 @@ public class onclick : MonoBehaviour
 
    public Button quit;
    
-   public void restartgame()
+ public void restartgame()
     {
+        // Reset slowmo before reloading the scene
+        if (SlowmoManager.Instance != null)
+        {
+            SlowmoManager.Instance.ResetSlowmo();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void mainmenu()
     {
+        // Reset slowmo before going to main menu
+        if (SlowmoManager.Instance != null)
+        {
+            SlowmoManager.Instance.ResetSlowmo();
+        }
         SceneManager.LoadScene("MainMenu");
     }
-
 }
+

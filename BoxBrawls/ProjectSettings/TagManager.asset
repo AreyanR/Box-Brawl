@@ -15,6 +15,7 @@ TagManager:
   - Easy
   - Medium
   - Hard
+  - Homing PU
   layers:
   - Default
   - TransparentFX

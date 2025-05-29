@@ -62,11 +62,10 @@ public class playercontroller : MonoBehaviour
 
     void FixedUpdate()
 {
-    if (isFrozen)
+    if (isFrozen || isBeingLaunched)
     {
-        // Optional: also zero velocity if you want total stop
         rb.linearVelocity = Vector3.zero;
-        return; // skip all movement while frozen
+        return;
     }
 
     // ...rest of your movement code...
@@ -78,12 +77,13 @@ public class playercontroller : MonoBehaviour
     Vector3 horizontalForce = moveDirection * speed;
     horizontalForce.y = rb.linearVelocity.y;
     rb.linearVelocity = horizontalForce;
+    
 
     if (moveDirection != Vector3.zero)
-    {
-        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
 }
 
 
@@ -191,6 +191,21 @@ public class playercontroller : MonoBehaviour
             enemy.Freeze(3f); // Call the freeze method on enemy
             audioSource.PlayOneShot(pickupSound);
         }
+else if (other.gameObject.CompareTag("Homing PU"))
+    {
+        other.gameObject.SetActive(false);
+        if (launchCoroutine != null)
+            StopCoroutine(launchCoroutine);
+
+        launchCoroutine = StartCoroutine(LaunchToEnemyRoutine(0.8f)); // Only launch, no return
+        audioSource.PlayOneShot(pickupSound);
+    }
+
+
+
+
+
+
 
     }
 
@@ -247,8 +262,8 @@ public class playercontroller : MonoBehaviour
         float normalizedStamina = currentStamina / maxStamina;
         stamwheel.fillAmount = normalizedStamina;
     }
-    
-    public void Freeze(float duration)
+
+public void Freeze(float duration)
 {
     isFrozen = true;
     freezeTimer = duration;
@@ -258,6 +273,35 @@ public class playercontroller : MonoBehaviour
     {
         iceCubeInstance = Instantiate(iceCubePrefab, transform.position, Quaternion.identity, transform);
     }
+}
+
+private bool isBeingLaunched = false;
+private Coroutine launchCoroutine;
+
+private IEnumerator LaunchToEnemyRoutine(float launchDuration = 0.8f)
+{
+    if (enemy == null) yield break;
+
+    isBeingLaunched = true;
+    rb.linearVelocity = Vector3.zero;
+
+    Vector3 start = transform.position;
+    Vector3 end = enemy.transform.position;
+    end.y = start.y; // Keep on the ground
+
+    float timer = 0f;
+    while (timer < launchDuration)
+    {
+        rb.MovePosition(Vector3.Lerp(start, end, timer / launchDuration));
+        timer += Time.fixedDeltaTime;
+        yield return new WaitForFixedUpdate();
+    }
+    rb.MovePosition(end); // Snap to the enemy's position
+
+    // (Optional: Wait a moment for "impact" effect)
+    yield return new WaitForSeconds(0.08f);
+
+    isBeingLaunched = false;
 }
 
 

@@ -44,4 +44,15 @@ public class SlowmoManager : MonoBehaviour
         Time.fixedDeltaTime = originalFixedDelta;
         activeSlowmo = null;
     }
+
+    public void ResetSlowmo()
+{
+    if (activeSlowmo != null)
+    {
+        StopCoroutine(activeSlowmo);
+        activeSlowmo = null;
+    }
+    Time.timeScale = 1f;
+    Time.fixedDeltaTime = originalFixedDelta;
+}
 }

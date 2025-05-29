@@ -34,6 +34,10 @@ public class enemyscript : MonoBehaviour
     public GameObject iceCubePrefab; // Assign this in the Inspector on the enemy
     private GameObject iceCubeInstance;
 
+    private bool isBeingLaunched = false;
+private Coroutine launchCoroutine;
+private Vector3 launchReturnPosition; // Save enemy's original position
+
 
 
     void Start()
@@ -54,25 +58,32 @@ public class enemyscript : MonoBehaviour
 
     void Update()
     {
-    if (isFrozen)
-    {
-        freezeTimer -= Time.deltaTime;
-        enemy.isStopped = true;
-        enemy.ResetPath();
-
-        if (freezeTimer <= 0f)
+        if (isBeingLaunched) 
         {
-            isFrozen = false;
-            enemy.isStopped = false;
-
-            // Destroy the ice cube visual when unfreezing
-            if (iceCubeInstance != null)
-            {
-                Destroy(iceCubeInstance);
-                iceCubeInstance = null;
-            }
+            rb.linearVelocity = Vector3.zero;
+            return; // Skip AI while launching
         }
-        return; // Skip AI/movement logic while frozen
+
+
+        if (isFrozen)
+        {
+            freezeTimer -= Time.deltaTime;
+            enemy.isStopped = true;
+            enemy.ResetPath();
+
+            if (freezeTimer <= 0f)
+            {
+                isFrozen = false;
+                enemy.isStopped = false;
+
+                // Destroy the ice cube visual when unfreezing
+                if (iceCubeInstance != null)
+                {
+                    Destroy(iceCubeInstance);
+                    iceCubeInstance = null;
+                }
+            }
+            return; // Skip AI/movement logic while frozen
         }
         // Enemy behavior based on player stats
         if ((count <= playercount.count && health <= playercount.health))
@@ -157,15 +168,25 @@ public class enemyscript : MonoBehaviour
             SlowmoManager.Instance.TriggerSlowmo();
         }
         else if (other.CompareTag("Freeze PU"))
-    {
-        other.gameObject.SetActive(false);
-        // Freeze the player instead of self
-        if (playercount != null)
         {
-            playercount.Freeze(3f);
+            other.gameObject.SetActive(false);
+            // Freeze the player instead of self
+            if (playercount != null)
+            {
+                playercount.Freeze(3f);
+            }
+            // You can add a sound effect here if you want
         }
-        // You can add a sound effect here if you want
-    }
+        else if (other.gameObject.CompareTag("Homing PU"))
+        {
+            other.gameObject.SetActive(false);
+            if (launchCoroutine != null)
+                StopCoroutine(launchCoroutine);
+
+            launchCoroutine = StartCoroutine(LaunchToPlayerRoutine(0.8f)); // Only launch, no return
+        }
+
+
 
     }
 
@@ -203,6 +224,7 @@ public class enemyscript : MonoBehaviour
         GameObject[] strengthPUs = GameObject.FindGameObjectsWithTag("Strength PU");
         GameObject[] slowmoPUs = GameObject.FindGameObjectsWithTag("Slowmo PU");
         GameObject[] freezePUs = GameObject.FindGameObjectsWithTag("Freeze PU");
+        GameObject[] homingPUs = GameObject.FindGameObjectsWithTag("Homing PU");
 
 
         powerups.AddRange(healthPUs);
@@ -210,6 +232,7 @@ public class enemyscript : MonoBehaviour
         powerups.AddRange(strengthPUs);
         powerups.AddRange(slowmoPUs);
         powerups.AddRange(freezePUs);
+        powerups.AddRange(homingPUs);
     }
 
     void setenemyhealth()
@@ -227,18 +250,56 @@ public class enemyscript : MonoBehaviour
         healthbar.fillAmount = health / maxhealth;
     }
 
-public void Freeze(float duration)
-{
-    isFrozen = true;
-    freezeTimer = duration;
-    enemy.isStopped = true;
-    enemy.ResetPath();
-
-    // Spawn ice cube ONCE
-    if (iceCubePrefab != null && iceCubeInstance == null)
+    public void Freeze(float duration)
     {
-        iceCubeInstance = Instantiate(iceCubePrefab, transform.position, Quaternion.identity, transform);
+        isFrozen = true;
+        freezeTimer = duration;
+        enemy.isStopped = true;
+        enemy.ResetPath();
+
+        // Spawn ice cube ONCE
+        if (iceCubePrefab != null && iceCubeInstance == null)
+        {
+            iceCubeInstance = Instantiate(iceCubePrefab, transform.position, Quaternion.identity, transform);
+        }
     }
+
+private IEnumerator LaunchToPlayerRoutine(float launchDuration = 0.8f)
+{
+    if (player == null) yield break;
+
+    isBeingLaunched = true;
+
+    // Disable NavMeshAgent so it doesn't interfere with Rigidbody
+    if (enemy.enabled && enemy.isOnNavMesh)
+        enemy.isStopped = true;
+    enemy.enabled = false;
+
+    rb.linearVelocity = Vector3.zero;
+
+    Vector3 start = transform.position;
+    Vector3 end = player.position;
+    end.y = start.y; // Stay on ground plane
+
+    // 1. Launch toward player
+    float timer = 0f;
+    while (timer < launchDuration)
+    {
+        rb.MovePosition(Vector3.Lerp(start, end, timer / launchDuration));
+        timer += Time.fixedDeltaTime;
+        yield return new WaitForFixedUpdate();
+    }
+    rb.MovePosition(end); // Snap to the player's position
+
+    // (Optional: Pause for effect)
+    yield return new WaitForSeconds(0.08f);
+
+    // Re-enable NavMeshAgent and allow normal movement
+    enemy.enabled = true;
+    if (enemy.enabled && enemy.isOnNavMesh)
+        enemy.isStopped = false;
+
+    isBeingLaunched = false;
 }
 
 
