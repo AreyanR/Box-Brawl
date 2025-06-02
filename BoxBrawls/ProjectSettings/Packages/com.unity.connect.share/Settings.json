@@ -4,7 +4,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"/home/cflux/Documents/Uni/Yr3/Game Programming/Box-Brawl/Builds;D:/Users/areya/Desktop/School/cs410/Box-Brawl/Builds;D:/Users/areya/Desktop/rq/dodoo;;;;;;;\"}"
+                "value": "{\"m_Value\":\"D:/Users/areya/Desktop/School/cs410/buildv2;D:/Users/areya/Desktop/School/cs410/Builds;/home/cflux/Documents/Uni/Yr3/Game Programming/Box-Brawl/Builds;D:/Users/areya/Desktop/School/cs410/Box-Brawl/Builds;D:/Users/areya/Desktop/rq/dodoo;;;;;\"}"
             },
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
