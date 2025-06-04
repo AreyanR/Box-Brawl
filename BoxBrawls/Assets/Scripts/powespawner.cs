@@ -20,7 +20,7 @@ public class powespawner : MonoBehaviour
         {
             timePassed += Time.deltaTime; 
 
-            if (timePassed > 1.0f)
+            if (timePassed > 3.0f)
             {
                 int randomIndex = Random.Range(0, myobject.Length); 
                 Vector3 randomspawnposition = new Vector3(Random.Range(-9, 9), 1, Random.Range(-9, 9)); // Random spawn location

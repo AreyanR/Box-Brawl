@@ -12,6 +12,9 @@ public class TournamentManager : MonoBehaviour
     public int totalStages = 3;
     public float[] enemyHealthPerStage;
 
+    public GameObject playerUI;
+    public GameObject enemyUI;
+
 
     private void Awake()
     {
@@ -69,4 +72,17 @@ public class TournamentManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
         LoadNextFight();
     }
+
+    public void HideUI()
+    {
+        if (playerUI) playerUI.SetActive(false);
+        if (enemyUI) enemyUI.SetActive(false);
+    }
+
+    public void ShowUI()
+    {
+        if (playerUI) playerUI.SetActive(true);
+        if (enemyUI) enemyUI.SetActive(true);
+    }
+
 }
