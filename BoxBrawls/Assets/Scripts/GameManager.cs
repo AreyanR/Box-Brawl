@@ -5,11 +5,13 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     //this script manages the game state, including player and enemy deaths, and displays the Game Over UI.
-    public static GameManager Instance; 
-  
+    public static GameManager Instance;
+
     // UI elements for the Game Over screen
     [Header("Game Over UI")]
     public TextMeshProUGUI gameOverText;
+    [Header("Round Info UI")]
+    public TextMeshProUGUI roundText;
     public GameObject playAgainButton;
     public GameObject quitGameButton;
 
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         HideGameOverUI();
+        HideGameOverButtons();
     }
 
     public void PlayerDied()
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
         {
             isGameOver = true;
             ShowGameOverUI("You Died!");
+            ShowGameOverButtons();
         }
     }
 
@@ -48,20 +52,28 @@ public class GameManager : MonoBehaviour
         {
             isGameOver = true;
             ShowGameOverUI("You Win!");
+            ShowGameOverButtons();
         }
+        TournamentManager.Instance.OnPlayerVictory();
     }
 
-    private void ShowGameOverUI(string message)
+    public void ShowGameOverButtons()
     {
-        gameOverText.text = message;
-        gameOverText.enabled = true;
         playAgainButton.SetActive(true);
         quitGameButton.SetActive(true);
     }
-
-    private void HideGameOverUI()
+    public void ShowGameOverUI(string message)
     {
-        gameOverText.enabled = false;
+        gameOverText.text = message;
+        gameOverText.enabled = true;
+    }
+
+    public void HideGameOverUI()
+    {
+        gameOverText.enabled = false;     
+    }
+    public void HideGameOverButtons()
+    {
         playAgainButton.SetActive(false);
         quitGameButton.SetActive(false);
     }
