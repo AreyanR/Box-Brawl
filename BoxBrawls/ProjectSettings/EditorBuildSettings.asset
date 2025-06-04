@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/Tournament.unity
     guid: fc116c2676849ef89b5e3004cb002a54
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/TournamentLose.unity
     guid: 03865b228985ec594b082026bfa7db27
   m_configObjects:

@@ -45,7 +45,7 @@ public class MenuButtons : MonoBehaviour
     public void playTournament()
     {
         EnsureTournamentManager();
-        TournamentManager.Instance.enemyHealthPerStage = new float[] { 10f, 20f, 40f };
+        TournamentManager.Instance.enemyHealthPerStage = new float[] { 100f, 200f, 400f };
         TournamentManager.Instance.totalStages = 3;
         TournamentManager.Instance.StartTournament();
     }
